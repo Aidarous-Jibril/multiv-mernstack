@@ -1,0 +1,379 @@
+import { React, useEffect, useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { RxAvatar } from "react-icons/rx";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { registerStore } from "../../redux/actions/storeActions";
+
+const StoreCreate = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const {storeInfo, success, error} = useSelector(state => state?.storeRegister)
+
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(null)
+  const [address, setAddress] = useState("")
+  const [zipCode, setZipCode] = useState(null)
+  const [avatar, setAvatar] = useState(null)
+  const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
+
+  // const handleSubmit = async (e) => {
+    // e.preventDefault()
+
+    // const formData = new FormData();
+    // formData.append('name', name);
+    // formData.append('email', email);
+    // formData.append('phoneNumber', phoneNumber);
+    // formData.append('address', address);
+    // formData.append('zipCode', zipCode);
+    // formData.append('avatar', avatar);
+    // formData.append('password', password);
+
+  //   const config = {
+  //       headers: {
+  //           'content-type': 'multipart/form-data'
+  //       }
+  //   };
+  //   axios.post("/api/stores/register",formData,config)
+  //       .then((res) => {
+  //         // console.log(res)
+  //         toast.success(res.data.msg);
+  //         navigate("/");
+  //         localStorage.setItem("storeInfo", JSON.stringify(res.data));
+  //       }).catch((error) => {
+  //         console.log(error)
+  //         toast.error(error.response.data.error)
+  //   });
+  // };
+
+
+  useEffect(() => {
+    if(storeInfo){
+      toast.success(storeInfo.msg);
+        navigate('/')
+    } 
+    if(error){
+      toast.error(error);
+      navigate("/store-create");
+    } 
+}, [storeInfo, error, navigate])
+
+//submit
+const handleSubmit = (e) => {
+  e.preventDefault()
+
+  const formData = new FormData();
+  formData.append('name', name);
+  formData.append('email', email);
+  formData.append('phoneNumber', phoneNumber);
+  formData.append('address', address);
+  formData.append('zipCode', zipCode);
+  formData.append('avatar', avatar);
+  formData.append('password', password);
+
+  // //validation
+  if(!name || !email || !phoneNumber || !address || !zipCode || !avatar || !password ) {
+    toast.error('All fields must be filled ')
+  } else {     
+      dispatch(
+        registerStore({
+          name,
+          email,
+          phoneNumber,
+          address,
+          zipCode,
+          avatar,
+          password,
+        })
+      );
+  }
+    // dispatch(registerStore(formData));    
+
+    if(success) {
+      //reset form fields
+      setName('');
+      setEmail('');
+      setPassword('');
+      setAddress('')
+      setPhoneNumber();
+      zipCode();
+      setAvatar()
+    }
+}
+
+  const handleFileInputChange = (e) => {
+    // const file = e.target.files[0]
+    // setAvatar(file)
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setAvatar(reader.result);
+      }
+    };
+
+    reader.readAsDataURL(e.target.files[0]);
+  };
+console.log(avatar)
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Create A New Store
+        </h2>
+      </div>
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Store Name
+              </label>
+              <div className="mt-1">
+                <input
+                  type="text"
+                  name="text"
+                  autoComplete="name"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Store Email
+              </label>
+              <div className="mt-1">
+                <input
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Store Phone Number
+              </label>
+              <div className="mt-1">
+                <input
+                  type="number"
+                  name="phoneNumber"
+                  autoComplete="num"
+                  required
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Store Address
+              </label>
+              <div className="mt-1">
+                <input
+                  type="text"
+                  name="text"
+                  autoComplete="address"
+                  required
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Store Zip Code
+              </label>
+              <div className="mt-1">
+                <input
+                  type="number"
+                  name="zipCode"
+                  autoComplete="name"
+                  required
+                  value={zipCode}
+                  onChange={(e) => setZipCode(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <div className="mt-1 relative">
+                <input
+                  type={visible ? "text" : "password"}
+                  name="password"
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+                {visible ? (
+                  <AiOutlineEye
+                    className="absolute right-2 top-2 cursor-pointer"
+                    size={25}
+                    onClick={() => setVisible(false)}
+                  />
+                ) : (
+                  <AiOutlineEyeInvisible
+                    className="absolute right-2 top-2 cursor-pointer"
+                    size={25}
+                    onClick={() => setVisible(true)}
+                  />
+                )}
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="avatar"
+                className="block text-sm font-medium text-gray-700"
+              ></label>
+              <div className="mt-2 flex items-center">
+                <span className="inline-block h-8 w-8 rounded-full overflow-hidden">
+                  {avatar ? (
+                    <img
+                      src={avatar}
+                      alt="avatar"
+                      className="h-full w-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <RxAvatar className="h-8 w-8" />
+                  )}
+                </span>
+                <label
+                  htmlFor="file-input"
+                  className="ml-5 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  <span>Upload a file</span>
+                  <input
+                    type="file"
+                    name="avatar"
+                    id="file-input"
+                    onChange={handleFileInputChange}
+                    className="sr-only"
+                  />
+                </label>
+              </div>
+            </div>
+            {/* <!-- Remember me checkbox --> */}
+            <div className="mb-6 flex items-center justify-between">
+              <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+                <input
+                  type="checkbox"
+                  name="remember-me"
+                  id="remember-me"
+                  className="relative float-left -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] "
+                />
+                <label
+                  className="inline-block pl-[0.15rem] hover:cursor-pointer"
+                  htmlFor="exampleCheck3"
+                >
+                  Remember me
+                </label>
+              </div>
+
+              {/* <!-- Forgot password link --> */}
+              <a
+                href="#!"
+                className="text-blue-700 transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+              >
+                Forgot password?
+              </a>
+            </div>
+            <div>
+              <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                Sign up
+              </button>
+            </div>
+          </form>
+
+          <div className="flex items-center justify-between mt-8">
+            <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/5"></span>
+            <a
+              href="#"
+              className="text-xs text-center text-gray-500 uppercase dark:text-gray-400 hover:underline"
+            >
+              or create store with Google 
+            </a>
+
+            <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/5"></span>
+          </div>
+
+          <a
+            href="#"
+            className="flex items-center justify-center px-6 py-3 mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+          >
+            <svg className="w-6 h-6 mx-2" viewBox="0 0 40 40">
+              <path
+                d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
+                fill="#FFC107"
+              />
+              <path
+                d="M5.25497 12.2425L10.7308 16.2583C12.2125 12.59 15.8008 9.99999 20 9.99999C22.5491 9.99999 24.8683 10.9617 26.6341 12.5325L31.3483 7.81833C28.3716 5.04416 24.39 3.33333 20 3.33333C13.5983 3.33333 8.04663 6.94749 5.25497 12.2425Z"
+                fill="#FF3D00"
+              />
+              <path
+                d="M20 36.6667C24.305 36.6667 28.2167 35.0192 31.1742 32.34L26.0159 27.975C24.3425 29.2425 22.2625 30 20 30C15.665 30 11.9842 27.2359 10.5975 23.3784L5.16254 27.5659C7.92087 32.9634 13.5225 36.6667 20 36.6667Z"
+                fill="#4CAF50"
+              />
+              <path
+                d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
+                fill="#1976D2"
+              />
+            </svg>
+
+            <span className="mx-2">Sign up with Google</span>
+          </a>
+
+          <p className="mt-12 text-s font-ligh text-center text-gray-700">
+            {" "}
+            Already have an account?{" "}
+            <Link
+              to="/store-login"
+              className="font-medium text-blue-600 dark:text-gray-200 hover:underline"
+            >
+              Sigin
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+
+export default StoreCreate
