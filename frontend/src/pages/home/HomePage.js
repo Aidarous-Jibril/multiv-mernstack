@@ -7,16 +7,17 @@ import FeaturedProducts from '../../components/routes/FeaturedProducts'
 import Events from '../../components/events/Events'
 import Sponsored from '../../components/routes/Sponsored'
 import Footer from '../../components/layout/Footer'
+import styles from '../../styles/styles'
 
 const HomePage = () => {
   return (
-    <div>
-        <Header activeHeading={1} />
+    <div className="overflow-x-hidden"  >
+        <Header activeHeading={1}/>
         <Hero />
         <Categories />
         <BestDeals />
         <FeaturedProducts />
-        <Events />
+        {/* <Events /> */}
         <Sponsored />
         <Footer />
     </div>

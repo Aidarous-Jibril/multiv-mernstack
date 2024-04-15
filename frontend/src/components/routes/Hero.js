@@ -1,56 +1,129 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styles from "../../styles/styles";
+import React, { useState} from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import bannerImgOne from "../../assets/banner/bannerImgOne.jpg";
+import bannerImgTwo from "../../assets/banner/bannerImgTwo.jpg";
+import bannerImgThree from "../../assets/banner/bannerImgThree.jpg";
+import bannerImgFour from "../../assets/banner/bannerImgFour.jpg";
+import bannerImgFive from "../../assets/banner/bannerImgFive.jpg";
 
 const Hero = () => {
-  return (
-    <>
-    
-    <div
-      className={`relative min-h-[70vh] 800px:min-h-[80vh] w-full bg-no-repeat ${styles.normalFlex}`}
-      style={{
-        backgroundImage: "url(https://themes.rslahmed.dev/rafcart/assets/images/banner-2.jpg)",
-      }}
-    >
-      <div className={`${styles.section} w-[90%] 800px:w-[70%]`}>
-        
-        <h1
-          className={`text-[55px] leading-[1.2] 800px:text-[80px] text-[#3d3a3a] font-[600] capitalize`}
+  const [dotActive, setDocActive] = useState(0);
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    beforeChange: (prev, next) => {
+      setDocActive(next);
+    },
+    appendDots: (dots) => (
+      <div
+        style={{
+          position: "absolute",
+          top: "70%",
+          left: "40%",
+          transform: "translate(-50% -50%)",
+          width: "210px",
+        }}
+      >
+        <ul
+          style={{
+            position: "absolute",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-         Create your  unique <br/> <strong className="text-red-700">Online Store </strong>
-        </h1>
-        <p className="pt-4 text-[16px] font-[Poppins] font-[400] text-[#000000ba]">
-            GoStore is a leading Multivendor & Marketplace Platform{" "}
-          <br /> aliquam deserunt officia. Dolorum saepe nulla provident.
-        </p>
-        <Link to="/products" className="inline-block">
-           <div className={`${styles.button} mt-4`}>
-            <span className="text-[#fff] font-[Poppins] text-[18px] ">
-              Get Started
-            </span>
-          </div> 
+          {" "}
+          {dots}{" "}
+        </ul>
+      </div>
+    ),
+    customPaging: (i) => (
+      <div
+        style={
+          i === dotActive
+            ? {
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+                background: "#131921",
+                padding: "8px 0",
+                cursor: "pointer",
+                border: "1px solid #f3a847",
+              }
+            : {
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "#232F3E",
+                color: "white",
+                padding: "8px 0",
+                cursor: "pointer",
+                border: "1px solid white",
+              }
+        }
+      >
+        {i + 1}
+      </div>
+    ),
+  };
 
-        </Link>
+  return (
+    <div className="w-full">
+      <div className="w-full h-full relative">
+        <Slider {...settings}>
+          <div>
+            <img
+              src={bannerImgOne}
+              alt="bannerImgOne"
+              className="w-full"
+            />
+          </div>
+          <div>
+            <img
+              src={bannerImgTwo}
+              alt="bannerImgTwo"
+              className="w-full"
+            />
+          </div>
+          <div>
+            <img
+              src={bannerImgThree}
+              alt="bannerImgThree"
+              className="w-full"
+            />
+          </div>
+          <div>
+            <img
+              src={bannerImgFour}
+              alt="bannerImgFour"
+              className="w-full"
+            />
+          </div>
+          <div>
+            <img
+               src={bannerImgFive}
+              alt="bannerImgFive"
+              className="w-full"
+            />
+          </div>
+        </Slider>
       </div>
     </div>
-
-    {/* <div className="relative isolate px-6 pt-14 lg:px-8">
-
-    <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Data to enrich your online business</h1>
-        <p className="mt-6 text-lg leading-8 text-gray-600">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
-        <div className="mt-10 flex items-center justify-center gap-x-6">
-          <a href="#" className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">Learn more <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-    </div>
-    <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-      <div className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" ></div>
-    </div>
-  </div> */}
-    </>
   );
 };
 

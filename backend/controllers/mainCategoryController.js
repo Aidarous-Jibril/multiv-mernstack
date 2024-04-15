@@ -98,7 +98,14 @@ const createCategory = async (req, res) => {
 // Get all categories
 const getCategories = async (req, res) => {
     try {
-        const categories = await MainCategory.find().populate('subcategories');
+        // const categories = await MainCategory.find().populate('subcategories');
+        const categories = await MainCategory.find()
+            .populate({
+                path: 'subcategories',
+                populate: {
+                    path: 'subsubcategories'
+                }
+            });
         res.status(200).json(categories);
     } catch (error) {
         res.status(500).json({ msg: 'Internal Server Error' });

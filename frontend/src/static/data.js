@@ -9,12 +9,16 @@ export const navItems = [
       url: "/products",
     },
     {
-      title: "Best Selling",
-      url: "/best-selling",
+      title: "Best Sellers",
+      url: "/best-sellers",
     },
     {
       title: "Events",
       url: "/events",
+    },
+    {
+      title: "Customer Service",
+      url: "/customer-service",
     },
     {
       title: "FAQ",
