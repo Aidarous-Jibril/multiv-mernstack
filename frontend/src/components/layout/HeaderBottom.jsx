@@ -259,10 +259,10 @@ const SideNavContent = ({ categories, sidebar }) => {
                           <ul className="ml-4">
                             {subcategory.subsubcategories.map(
                               (subsubcategory, index) => (
-                                <li key={index} className="my-2">
-                                  <a href={subsubcategory.link}>
+                                <li key={index} className="my-2 cursor-pointer hover:bg-slate-100 p-2 ">
+                                  <Link href={subsubcategory.link}>
                                     {subsubcategory.name}
-                                  </a>
+                                  </Link>
                                 </li>
                               )
                             )}
