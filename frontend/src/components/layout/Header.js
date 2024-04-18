@@ -380,29 +380,19 @@ import HeaderBottom from "./HeaderBottom";
 import HeaderUpper from "./HeaderUpper";
 
 const Header = ({ activeHeading }) => {
-  const { storeInfo } = useSelector((state) => state.storeLogin);
   const { categories } = useSelector((state) => state.categories);
   const { allProducts } = useSelector((state) => state.products);
-  const { cartItems } = useSelector((state) => state.cart);
-  const { wishListItems } = useSelector((state) => state.wishList);
 
   const [searchData, setSearchData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [active, setActive] = useState(false);
-  const [dropDown, setDropDown] = useState(false);
-  const [openCart, setOpenCart] = useState(false);
-  const [openWishlist, setOpenWishlist] = useState(false);
-  const [openMobileMenu, setOpenMobileMenu] = useState(false);
-  const [showAll, setShowAll] = useState(false);
   const [sidebar, setSidebar] = useState(false);
 
-  console.log("ALL_PRODS", allProducts);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllCategories());
   }, []);
-  // console.log(categories)
 
   const handleSearchChange = (e) => {
     console.log(e.target.value);
@@ -434,14 +424,16 @@ const Header = ({ activeHeading }) => {
 
   return (
     <div className="w-full sticky top-0 z-50">
-        {/* HeaderUpper component */}
+      {/* HeaderUpper component */}
+      <div className={active === true ? "w-full shadow-sm fixed top-0 left-0 z-10" : null} >
         <HeaderUpper
           categories={categories}
           handleSearchChange={handleSearchChange}
           searchData={searchData}
           setSearchData={setSearchData}
         />
-
+      </div>
+      
       {/* Sidebar */}
       {sidebar && (
         <motion.div
@@ -480,10 +472,11 @@ const Header = ({ activeHeading }) => {
       <HeaderBottom
         categories={categories}
         active={activeHeading}
+        setActive={setActive}
         handleSearchChange={handleSearchChange}
         searchData={searchData}
-        setSearchData={setSearchData} 
-      /> 
+        setSearchData={setSearchData}
+      />
     </div>
   );
 };
