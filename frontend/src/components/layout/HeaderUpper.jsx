@@ -42,15 +42,37 @@ const HeaderUpper = ({ handleSearchChange, searchData}) => {
           </div>
 
           {/* Search */}
-            {/* Middle part: Search */}
-      <div className="flex items-center justify-center w-1/2">
-        <input
-          type="text"
-          placeholder="Search products..."
-          className="px-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none"
-        />
-        <SearchIcon className="h-5 w-5 text-gray-500 ml-2" />
-      </div>
+          <div className="h-10 rounded-md flex flex-grow relative mx-4">
+            <div className="flex items-center justify-center w-1/2 lg:w-2/3">
+              <input
+                onChange={(e) => handleSearchChange(e)}
+                className="h-full text-base text-[#131921] flex-grow outline-none border-none px-2"
+                type="text"
+                placeholder="Search products..."
+              />
+              <span className="w-12 h-full flex items-center justify-center bg-[#febd69] hover:bg-[#f3a847] duration-300 text-[#131921] cursor-pointer rounded-tr-md rounded-br-md">
+                <SearchIcon width={24} />
+              </span>
+            </div>
+            {/* Adjusted here to show searched item perfectly */}
+            {searchData && searchData?.length !== 0 ? (
+              <div className="absolute w-full bg-slate-50 shadow-sm z-50 mt-12 p-4">
+                {searchData &&
+                  searchData?.map((item, index) => (
+                    <Link to={`/product/${item?._id}`} key={index}>
+                      <div className="w-full flex items-start py-3">
+                        <img
+                          src={`${item?.images[0]?.url}`}
+                          alt=""
+                          className="w-[40px] h-[40px] mr-[20px]"
+                        />
+                        <h1 className="text-[#000]">{item?.name}</h1>
+                      </div>
+                    </Link>
+                  ))}
+              </div>
+            ) : null}
+          </div>
 
           <div className="flex gap-4">
             <div className={`${styles.normalFlex}`}>

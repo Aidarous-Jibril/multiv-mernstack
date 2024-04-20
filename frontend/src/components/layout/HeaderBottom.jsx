@@ -26,7 +26,7 @@ const HeaderBottom = ({
 }) => {
   const ref = useRef();
   const { storeInfo } = useSelector((state) => state.storeLogin);
-  const {userInfo} = useSelector(state => state.auth)
+  const { userInfo } = useSelector((state) => state.auth);
   const [sidebar, setSidebar] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [showSearch, setShowSearch] = useState(false);
@@ -96,34 +96,41 @@ const HeaderBottom = ({
             </div>
           )}
         </ul>
-        {/* Search and Cart Icons when in smaller devices*/}
+          {/* smaller devices: Logo */}
+        <Link to="/">
+          <img
+            src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+            alt=""
+            className="w-24 cursor-pointer"
+          />
+        </Link>
+        {/* smaller devices: Search and Cart Icons */}
         {windowWidth < 768 && (
           <>
-          <div className="flex items-center">
-            <SearchIcon
-              className="h-6 w-6 text-white mr-4 cursor-pointer"
-              onClick={handleSearchToggle}
-            />
-            <ShoppingCartIcon
-              onClick={() => setOpenCart(!openCart)}
-              className="h-6 w-6 mr-4 text-white cursor-pointer"
-            />
-            {/* <UserIcon className="h-6 w-6 text-white cursor-pointer" /> */}
-            {userInfo ? (
-              <Link to="/profile">
-                <img
-                  src={`${userInfo?.avatar?.url}`}
-                  className="w-[35px] h-[35px] rounded-full"
-                  alt=""
-                />
-              </Link>
-            ) : (
-              <Link to="/login">
-                <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
-              </Link>
-                )}
-          </div>
-          {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
+            <div className="flex items-center">
+              <SearchIcon
+                className="h-6 w-6 text-white mr-4 cursor-pointer"
+                onClick={handleSearchToggle}
+              />
+              <ShoppingCartIcon
+                onClick={() => setOpenCart(!openCart)}
+                className="h-6 w-6 mr-4 text-white cursor-pointer"
+              />
+              {userInfo ? (
+                <Link to="/profile">
+                  <img
+                    src={`${userInfo?.avatar?.url}`}
+                    className="w-[35px] h-[35px] rounded-full"
+                    alt=""
+                  />
+                </Link>
+              ) : (
+                <Link to="/login">
+                  <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+                </Link>
+              )}
+            </div>
+            {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
           </>
         )}
         {/* ListItems End here */}
@@ -181,12 +188,15 @@ const HeaderBottom = ({
             ref={ref}
             className="w-[350px] h-full bg-white border border-black "
           >
-            <div className="w-full bg-[#232F3E] text-white py-2 px- flex items-center gap-4">
-              <MdAccountCircle />
-              <h3 className="font-titleFont font-bold text-lg tracking-wide">
-                Hello, Sign In
+            <Link
+              to="/login"
+              className="w-full bg-[#232F3E] text-white py-2 pl-2 flex items-center gap-4"
+            >
+              <CgProfile size={24} color="rgb(255 255 255 / 83%)" />
+              <h3 className="font-titleFont font-semibold text-lg tracking-wide">
+                Sign In
               </h3>
-            </div>
+            </Link>
             {/* Render Categories */}
             <SideNavContent categories={categories} sidebar={sidebar} />
             <span
@@ -259,7 +269,10 @@ const SideNavContent = ({ categories, sidebar }) => {
                           <ul className="ml-4">
                             {subcategory.subsubcategories.map(
                               (subsubcategory, index) => (
-                                <li key={index} className="my-2 cursor-pointer hover:bg-slate-100 p-2 ">
+                                <li
+                                  key={index}
+                                  className="my-2 cursor-pointer hover:bg-slate-100 p-2 "
+                                >
                                   <Link href={subsubcategory.link}>
                                     {subsubcategory.name}
                                   </Link>
