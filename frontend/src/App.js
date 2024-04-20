@@ -8,7 +8,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
 // local imports
-import { LoginPage, RegisterPage, HomePage, ProductsPage, BestSellingPage, EventsPage, FAQPage, ProductDetailsPage, ProfilePage, CheckoutPage, StoreCreatePage, StoreLoginPage, PaymentPage, OrderSuccessPage, UserOrderDetailsPage, UserTrackOrderPage, UserInboxPage, } from './pages';
+import { LoginPage, RegisterPage, HomePage, ProductsPage, BestSellingPage, EventsPage, FAQPage,CustomerService, ProductDetailsPage, ProfilePage, CheckoutPage, StoreCreatePage, StoreLoginPage, PaymentPage, OrderSuccessPage, UserOrderDetailsPage, UserTrackOrderPage, UserInboxPage, } from './pages';
 import { UserProtectedRoute, SellerProtectedRoute } from './routes/protected-routes';
 import { StoreHomePage, StoreDashboardPage, StoreCreateProductPage, StoreCreateEventPage, StoreAllProductsPage, StoreAllEventsPage, StoreAllCouponsPage, StoreAllOrdersPage, StorePreviewPage, StoreOrderDetailsPage, StoreAllRefundsPage, StoreSettingsPage, StoreWithDrawMoneyPage, StoreMessagesPage, } from './pages/store';
 import { getAllProducts } from './redux/actions/productActions';
@@ -24,7 +24,6 @@ function App() {
 
   async function getStripeApiKey(){
     const { data } = await axios.get(`/api/payment/stripeapikey`);
-    // console.log(data)
     setstripeApiKey(data.stripeApiKey);
   }
 
@@ -32,7 +31,6 @@ function App() {
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllEvents());
-    // dispatch(loadUser());
     getStripeApiKey();
   }, []);
 
@@ -63,6 +61,7 @@ function App() {
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/best-sellers' element={<BestSellingPage />} />
         <Route path='/events' element={<EventsPage />} />
+        <Route path='/customer-service' element={<CustomerService />} />
         <Route path='/faq' element={<FAQPage />} />
         <Route path='/store-create' element={<StoreCreatePage/>} />
         <Route path='/store-login' element={<StoreLoginPage />} />

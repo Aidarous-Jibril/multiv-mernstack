@@ -11,7 +11,6 @@ import HeaderUpper from "./HeaderUpper";
 const Header = ({ activeHeading }) => {
   const { categories } = useSelector((state) => state.categories);
   const { allProducts } = useSelector((state) => state.products);
-
   const [searchData, setSearchData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [active, setActive] = useState(false);

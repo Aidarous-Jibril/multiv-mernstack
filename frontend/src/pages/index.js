@@ -5,6 +5,7 @@ import ProductsPage from "./ProductsPage";
 import BestSellingPage from "./BestSellingPage";
 import EventsPage from "./EventsPage";
 import FAQPage from "./FAQPage";
+import CustomerService from "./CustomerService";
 import ProductDetailsPage from "./ProductDetailsPage";
 import ProfilePage from "./ProfilePage";
 import CheckoutPage from "./CheckoutPage";
@@ -26,6 +27,7 @@ export {
     BestSellingPage,
     EventsPage,
     FAQPage,
+    CustomerService,
     ProductDetailsPage,
     ProfilePage,
     CheckoutPage,

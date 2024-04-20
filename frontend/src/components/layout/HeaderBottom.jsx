@@ -10,8 +10,6 @@ import {
   ShoppingCartIcon,
 } from "@heroicons/react/solid";
 import { IoMenu } from "react-icons/io5";
-import { MdAccountCircle } from "react-icons/md";
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { navItems } from "../../static/data";
@@ -97,6 +95,9 @@ const HeaderBottom = ({
           )}
         </ul>
           {/* smaller devices: Logo */}
+        {/* smaller devices: Search and Cart Icons */}
+        {windowWidth < 768 && (
+          <>
         <Link to="/">
           <img
             src="https://shopo.quomodothemes.website/assets/images/logo.svg"
@@ -104,9 +105,6 @@ const HeaderBottom = ({
             className="w-24 cursor-pointer"
           />
         </Link>
-        {/* smaller devices: Search and Cart Icons */}
-        {windowWidth < 768 && (
-          <>
             <div className="flex items-center">
               <SearchIcon
                 className="h-6 w-6 text-white mr-4 cursor-pointer"

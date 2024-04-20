@@ -259,7 +259,7 @@ const FAQPage = () => {
   
   return (
     <div className='mb-4'>
-      <Header activeHeading={5} />
+      <Header activeHeading={6} />
       <Faq />
       <Footer />
     </div>
