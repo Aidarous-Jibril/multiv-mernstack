@@ -12,7 +12,8 @@ import { Link } from "react-router-dom";
 
 // installed tailwind dependencies
 import { DataGrid } from "@material-ui/data-grid";
-import { Button } from "@material-ui/core";
+// import { Button } from "@material-ui/core";
+import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from "react-redux";
 import { addUserAddress, deleteUserAddress, updateUserInformation } from "../../redux/actions/userActions";
 import { toast } from "react-toastify";

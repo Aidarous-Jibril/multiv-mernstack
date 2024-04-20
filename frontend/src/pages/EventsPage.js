@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 //components
 import Header from '../components/layout/Header'
 import EventCard from '../components/events/EventCard'
-import styles from '../styles/styles';
 
 const EventsPage = () => {
   const { allEvents, isLoading } = useSelector((state) => state.events);

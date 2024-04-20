@@ -1,8 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../../styles/styles";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { loginStore } from "../../redux/actions/storeActions";
